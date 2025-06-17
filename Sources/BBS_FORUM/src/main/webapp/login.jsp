@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html lang="en">
 <head>
@@ -144,10 +144,15 @@
 <c:if test="${not empty msg}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
+       /*方式二
+       window.addEventListener("DOMContentLoaded", function () {
+            alert("测试是否弹窗");
+        });*/
+
         $(document).ready(function() {
             // 显示提示消息
             if(!$.trim('${msg}') == ''){
-                alert('${msg}');
+                    alert('${msg}');
             }
 
         });

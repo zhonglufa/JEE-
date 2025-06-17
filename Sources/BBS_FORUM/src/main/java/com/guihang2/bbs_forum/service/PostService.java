@@ -16,7 +16,7 @@ public interface PostService {
     /**
      * 根据文章ID获取文章详情
      * @param postId 文章ID
-     * @return 文章对象
+     * @return 文章对象和作者
      */
     Post getPostById(Integer postId);
 

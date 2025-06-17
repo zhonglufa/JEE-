@@ -28,7 +28,7 @@ public class PostServiceImp implements PostService {
 
     @Override
     public Post getPostById(Integer postId) {
-        return postDao.selectPostById(postId);
+        return postDao.selectPostWithUserNameByPostId(postId);
 
     }
 

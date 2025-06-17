@@ -2,9 +2,11 @@ package com.guihang2.bbs_forum.controller;
 
 import com.guihang2.bbs_forum.pojo.Comment;
 import com.guihang2.bbs_forum.pojo.Post;
+import com.guihang2.bbs_forum.pojo.Reply;
 import com.guihang2.bbs_forum.pojo.User;
 import com.guihang2.bbs_forum.service.CommentService;
 import com.guihang2.bbs_forum.service.PostService;
+import com.guihang2.bbs_forum.service.ReplyService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/post")
@@ -28,6 +27,9 @@ public class PostController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private ReplyService replyService;
 
     @PostMapping("/addPost")
     public String addPost(@RequestParam("title") String title,
@@ -121,16 +123,24 @@ public class PostController {
 
         // 获取评论列表
         List<Comment> comments = commentService.getCommentsByPostId(postId);
-
         model.addAttribute("comments", comments);
-        for (Comment comment : comments){
-            System.out.println("第一个"+comment.getCreatedAt());
-            System.out.println("第二个"+comment.getUpdatedAt());
-            System.out.println("第三个"+comment.getUserName());
-            System.out.println("第四个"+comment.getContent());
-            System.out.println("第五个"+comment.getCommentId());
+        //获取单个评论的回复列表
+        Map<Integer, List<Reply>> replyMap = new HashMap<>();
+        for (Comment comment : comments) {
+            Integer commentId = comment.getCommentId();
+            List<Reply> replies = replyService.getRepliesByCommentId(commentId);
+            // 将回复列表添加到Map中     Collections.emptyList()创建一个空的列表，用于处理空指针异常
+            replyMap.put(commentId, replies == null ? Collections.emptyList() : replies);
         }
-        return "postDetail";
+        model.addAttribute("replyMap", replyMap);
+      // 打印
+        for (Map.Entry<Integer, List<Reply>> entry : replyMap.entrySet()) {
+            for (Reply reply : entry.getValue()) {
+                System.out.println("打印回复列表内容");
+                System.out.println(entry.getKey() + "+++ " + reply.getContent());
+            }
+        }
+         return "postDetail";
     }
 
 

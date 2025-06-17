@@ -21,7 +21,7 @@ public class MyInterceptor implements HandlerInterceptor {
             //未登录
             request.setAttribute("msg","请登录之后在访问");
             //从静态地址转发登录页面，不会被拦截，因为之拦截controlle
-            request.getRequestDispatcher("/login.jsp").forward(request,response);
+            request.getRequestDispatcher("/user/login").forward(request,response);
             return false;
         }
         return true;

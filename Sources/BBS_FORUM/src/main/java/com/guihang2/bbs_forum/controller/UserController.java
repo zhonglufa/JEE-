@@ -5,7 +5,6 @@ import com.guihang2.bbs_forum.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -38,14 +37,16 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginUser(User user1,
-                            HttpSession session, RedirectAttributes redirectAttributes) {
+                            HttpSession session,
+                            RedirectAttributes redirectAttributes) {
         User user = userService.loginUser(user1);
         if (user != null) {
             session.setAttribute("user", user);
-            redirectAttributes.addFlashAttribute("msg", "登录成功");
+
+            redirectAttributes.addAttribute("msg", "登录成功");
             return "redirect:/post/home"; // 登录成功后跳转到首页
         } else {
-            redirectAttributes.addFlashAttribute("msg", "用户名或密码错误");
+            redirectAttributes.addAttribute("msg", "用户名或密码错误");
             return "redirect:/";// 登录失败返回登录页面并显示错误信息
         }
     }

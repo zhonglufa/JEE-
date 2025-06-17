@@ -14,16 +14,9 @@ public interface PostDao {
      * @param post 帖子对象
      * @return 插入成功返回 true，否则返回 false
      */
-    @Insert("insert into post (title, content, user_id, created_at, updated_at, coverImage) values (#{title}, #{content}, #{userId}, #{createdAt}, #{updatedAt}, #{coverImage,jdbcType=LONGVARCHAR})")
+    @Insert("insert into post (title, content, userId, createdIt, updatedIt, coverImage) values (#{title}, #{content}, #{userId}, #{createdAt}, #{updatedAt}, #{coverImage,jdbcType=LONGVARCHAR})")
     boolean insertPost(Post post);
 
-    /**
-     * 根据文章ID获取文章详情
-     * @param postId 文章ID
-     * @return 文章对象
-     */
-    @Select("SELECT * FROM post WHERE postId = #{postId}")
-    Post selectPostById(Integer postId);
 
     /**
      * 获取文章列表并支持分页
@@ -31,7 +24,7 @@ public interface PostDao {
      * @param pageSize 每页显示的文章数量
      * @return 文章列表
      */
-    @Select("SELECT * FROM post ORDER BY created_at DESC LIMIT #{offset}, #{pageSize}")
+    @Select("SELECT * FROM post ORDER BY createdAt DESC LIMIT #{offset}, #{pageSize}")
     List<Post> selectPostList(@Param("offset") int offset, @Param("pageSize") int pageSize);
 
     /**
@@ -40,4 +33,11 @@ public interface PostDao {
      */
     @Select("SELECT COUNT(*) FROM post")
     int countPosts();
+
+    /**
+     * 根据postID获取某个文章信息和作者名
+     * @return 文章信息和作者名
+     */
+    @Select("SELECT p.*, u.username AS userName FROM post p JOIN user u ON p.userId = u.userId WHERE p.postId = #{postId}")
+    Post selectPostWithUserNameByPostId(Integer postId);
 }
