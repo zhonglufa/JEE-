@@ -52,9 +52,11 @@
         .forum-header {
             background: linear-gradient(135deg, var(--primary), #3a0ca3);
             color: white;
-            padding: 1rem 0;
+            padding: 0.8rem 0;
             box-shadow: var(--shadow-md);
-            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-container {
@@ -64,23 +66,33 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
         }
 
-        .logo i {
-            color: #ffd166;
+        .logo img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 0 2px white;
         }
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-links a {
@@ -88,14 +100,29 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
-            padding: 0.5rem 0;
+            padding: 0.5rem;
             position: relative;
+            font-size: 0.95rem;
         }
 
         .nav-links a:hover {
             color: white;
         }
 
+        .nav-links a.active {
+            color: white;
+            font-weight: 600;
+        }
+
+        /*.nav-links a.active::after {*/
+        /*    content: '';*/
+        /*    position: absolute;*/
+        /*    bottom: 0;*/
+        /*    left: 0.5rem;*/
+        /*    width: calc(100% - 1rem);*/
+        /*    height: 2px;*/
+        /*    background: white;*/
+        /*}*/
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -110,6 +137,272 @@
         .nav-links a:hover::after {
             width: 100%;
         }
+
+        .search-bar {
+            display: flex;
+            flex: 1;
+            max-width: 250px;
+            min-width: 150px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            border: none;
+            border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+            font-size: 0.95rem;
+        }
+
+        .search-bar button {
+            background-color: var(--secondary);
+            border: none;
+            color: white;
+            padding: 0 1.2rem;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .search-bar button:hover {
+            background-color: var(--secondary-dark);
+        }
+
+        /* 用户控制区 */
+        .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .auth-btn {
+            padding: 0.6rem 1rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .login-btn {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .register-btn {
+            background-color: white;
+            border: 1px solid white;
+            color: var(--primary);
+        }
+
+        .register-btn:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .user-name {
+            color: white;
+            font-weight: 500;
+        }
+
+        .post-btn {
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .post-btn:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+        }
+
+        .profile-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-md);
+            min-width: 180px;
+            z-index: 100;
+            overflow: hidden;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .profile-menu.show {
+            display: block;
+        }
+
+        .profile-menu a {
+            display: block;
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .profile-menu a:hover {
+            background-color: var(--bg-light);
+            color: var(--primary);
+        }
+
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-links {
+                order: 3;
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 5px;
+                margin-top: 10px;
+            }
+
+            .search-bar {
+                order: 4;
+                margin-top: 10px;
+            }
+
+            .user-controls {
+                order: 2;
+                justify-content: flex-end;
+            }
+
+            .post-card {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .post-cover {
+                width: 100%;
+                height: 160px;
+            }
+
+            .post-meta {
+                gap: 1rem;
+            }
+
+            .post-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .comment-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .comment-content {
+                padding-left: 0;
+                padding-top: 0.75rem;
+            }
+
+            .comment-author {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .post-actions {
+                width: 100%;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+
+            .action-btn {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            .action-btn span {
+                display: none;
+            }
+        }
+
+        /* 页脚 */
+        .footer {
+            background-color: var(--bg-white);
+            padding: 2rem 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* 响应式设计 */
+
+        @media (max-width: 576px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-options {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+        }
+
+
+
+
+
+
+
+
+
 
         /* 主内容区域 */
         .post-detail {
@@ -390,61 +683,10 @@
             font-size: 1.1rem;
         }
 
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
 
-            .nav-links {
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
 
-            .post-meta {
-                gap: 1rem;
-            }
 
-            .post-footer {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
 
-            .comment-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.75rem;
-            }
-
-            .comment-content {
-                padding-left: 0;
-                padding-top: 0.75rem;
-            }
-
-            .comment-author {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .post-actions {
-                width: 100%;
-                justify-content: space-between;
-                gap: 0.5rem;
-            }
-
-            .action-btn {
-                padding: 0.5rem;
-                font-size: 0.85rem;
-            }
-
-            .action-btn span {
-                display: none;
-            }
-        }
 
         /* 新增回复区域样式 */
         .replies-list {
@@ -518,7 +760,7 @@
             padding-left: 36px;
         }
 
-        .reply-form {
+        .reply-form, .reply-to-reply-form {
             margin-top: 1rem;
             padding: 1rem;
             background-color: #f8fafc;
@@ -528,11 +770,11 @@
             animation: fadeIn 0.3s ease;
         }
 
-        .reply-form.show {
+        .reply-form.show, .reply-to-reply-form.show {
             display: block; /* 显示回复表单 */
         }
 
-        .reply-form textarea {
+        .reply-form textarea, .reply-to-reply-form textarea {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid var(--border);
@@ -544,7 +786,7 @@
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        .reply-form textarea:focus {
+        .reply-form textarea:focus, .reply-to-reply-form textarea:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
@@ -644,7 +886,7 @@
                 padding-left: 10px;
             }
 
-            .reply-form {
+            .reply-form, .reply-to-reply-form {
                 padding: 0.75rem;
             }
 
@@ -663,19 +905,67 @@
 <!-- 头部导航 -->
 <header class="forum-header">
     <div class="header-container">
-        <div class="logo">
-            <i class="fas fa-comments"></i>
+        <a href="#" class="logo">
+            <img alt="Logo" src="https://storage.googleapis.com/a1aa/image/VjQYiiPK2c51Blh2a9ixpR4nZVO3GeJ4b6twzmeF0FEeBzynA.jpg" />
             <span>BBS论坛</span>
-        </div>
+        </a>
+
         <nav class="nav-links">
-            <a href="#"><i class="fas fa-home"></i> 首页</a>
-            <a href="#"><i class="fas fa-fire"></i> 热门</a>
-            <a href="#"><i class="fas fa-star"></i> 精华</a>
-            <a href="#"><i class="fas fa-user"></i> 个人中心</a>
+            <a href="${pageContext.request.contextPath}/post/home" class="active">首页</a>
+            <a href="#">安卓应用</a>
+            <a href="#">专栏</a>
+            <a href="#">友情链接</a>
         </nav>
+     <c:if test="${false}">
+         <div class="search-bar">
+             <input type="text" placeholder="搜索内容..." />
+             <button><i class="fas fa-search"></i></button>
+         </div>
+    </c:if>
+
+
+        <div class="user-controls">
+            <c:choose>
+                <c:when test="${empty sessionScope.user}">
+                    <div class="auth-buttons">
+                        <a href="${pageContext.request.contextPath}/user/login" class="auth-btn login-btn">登录</a>
+                        <a href="${pageContext.request.contextPath}/user/register" class="auth-btn register-btn">注册</a>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}/post/toAddPost" class="post-btn">
+                        <i class="fas fa-plus"></i> 发布文章
+                    </a>
+                    <div class="user-profile" id="user-profile">
+                        <img class="user-avatar" id="user-avatar"
+                             src="${sessionScope.user.avatarUrl != null && sessionScope.user.avatarUrl !='' ? sessionScope.user.avatarUrl : 'https://ui-avatars.com/api/?name=' += sessionScope.user.username += '&background=random'}"
+                             alt="用户头像" />
+                        <span class="user-name" id="user-name">${sessionScope.user.username}</span>
+
+                        <div class="profile-menu" id="profile-menu">
+                            <a href="${pageContext.request.contextPath}/user/post">
+                                <i class="fas fa-folder"></i> 我的文章
+                            </a>
+                            <a href="${pageContext.request.contextPath}/user/profile">
+                                <i class="fas fa-user-circle"></i> 个人资料
+                            </a>
+                            <a href="${pageContext.request.contextPath}/reply/home">
+                                <i class="fas-solid fa-envelope"></i> 我的留言
+                            </a>
+                            </a>
+                            <a href="${pageContext.request.contextPath}/user/settings">
+                                <i class="fas fa-cog"></i> 设置
+                            </a>
+                            <a href="${pageContext.request.contextPath}/user/logout">
+                                <i class="fas fa-sign-out-alt"></i> 登出
+                            </a>
+                        </div>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </div>
 </header>
-
 <div class="container">
     <div class="post-detail">
         <!-- 文章头部 -->
@@ -684,7 +974,7 @@
             <div class="post-meta">
                 <div class="post-meta-item">
                     <i class="fas fa-user"></i>
-                    <span>作者</span>
+                    <span>作者: 技术达人</span>
                 </div>
                 <div class="post-meta-item">
                     <i class="far fa-clock"></i>
@@ -692,22 +982,21 @@
                 </div>
                 <div class="post-meta-item">
                     <i class="fas fa-eye"></i>
-                    <span>${post.views} 次浏览</span>
+                    <span>${post.views}次浏览</span>
                 </div>
                 <div class="post-meta-item">
                     <i class="fas fa-comments"></i>
-                    <span>${post.commentCount} 条评论</span>
+                    <span>${post.commentCount}条评论</span>
                 </div>
             </div>
         </div>
 
         <!-- 文章内容 -->
         <div class="post-content">
-            <!-- 文章图片 -->
             <c:if test="${not empty post.coverImage}">
                 <img class="post-image" src="data:image/jpeg;base64,${post.coverImage}" alt="文章封面">
             </c:if>
-            <p>${post.content}</p>
+          <p>${post.content}</p>
         </div>
 
         <!-- 文章底部 -->
@@ -727,101 +1016,15 @@
                 </button>
             </div>
             <div class="post-tags">
-                <span class="tag">#论坛讨论</span>
-                <span class="tag">#社区交流</span>
-                <span class="tag">#网络平台</span>
+                <span class="tag">#论坛设计</span>
+                <span class="tag">#Java开发</span>
+                <span class="tag">#SpringBoot</span>
             </div>
         </div>
     </div>
 
     <!-- 评论区域 -->
     <div class="comment-section">
-        <!-- 评论列表 -->
-        <ul class="comments-list">
-            <c:choose>
-                <c:when test="${not empty comments}">
-                    <c:forEach var="comment" items="${comments}">
-                        <li class="comment-item" data-comment-id="${comment.commentId}">
-                            <div class="comment-header">
-                                <div class="comment-author">
-                                    <div class="avatar">${comment.userName.substring(0,1)}</div>
-                                    <div class="author-info">
-                                        <div class="author-name">${comment.userName}</div>
-                                        <div class="comment-date"> <fmt:formatDate value="${comment.createdAt}" pattern="yyyy-MM-dd HH:mm" /></div>
-                                    </div>
-                                </div>
-                                <div class="comment-actions">
-                                    <c:if test="${sessionScope.user.role == 'ADMIN'}">
-                                        <button class="comment-action delete" title="删除评论">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </c:if>
-                                    <button class="comment-action" title="回复">
-                                        <i class="fas fa-reply"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="comment-content">${comment.content}</div>
-
-                            <!-- 回复列表 -->
-                                <div class="show-replies" data-comment-id="${comment.commentId}">
-                                    <i class="fas fa-chevron-down"></i>
-                                    <span>查看回复 (${fn:length(replyMap[comment.commentId])})</span>
-                                </div>
-                              <%--回复列表项--%>
-                                <ul class="replies-list" id="replies-${comment.commentId}">
-                                    <c:choose>
-                                        <c:when test="${not empty replyMap[comment.commentId]}">
-                                            <c:forEach var="reply" items="${replyMap[comment.commentId]}">
-                                                <li class="reply-item">
-                                                    <div class="reply-header">
-                                                        <div class="reply-author">
-                                                            <div class="reply-avatar">${reply.userName.substring(0,1)}</div>
-                                                            <div>
-                                                                <div class="reply-author-name">${reply.userName}</div>
-                                                                <div class="reply-date"><fmt:formatDate value="${reply.createdAt}" pattern="yyyy-MM-dd HH:mm" /></div>
-                                                            </div>
-                                                        </div>
-                                                        <c:if test="${sessionScope.user.userId == reply.getUserId()}">
-                                                            <button class="comment-action delete" title="删除回复">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </button>
-                                                        </c:if>
-                                                    </div>
-                                                    <div class="reply-content">${reply.content}</div>
-                                                </li>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li class="reply-item">暂无回复</li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </ul>
-                            <!-- 回复表单 -->
-                            <div class="reply-form" id="reply-form-${comment.commentId}">
-                                <form action="${pageContext.request.contextPath}/reply/add" method="post">
-                                    <input type="hidden" name="commentId" value="${comment.commentId}">
-                                    <textarea name="content" placeholder="回复 ${comment.userName}..." required></textarea>
-                                    <div class="reply-form-actions">
-                                        <button type="button" class="reply-form-btn reply-cancel" data-comment-id="${comment.commentId}">取消</button>
-                                        <button type="submit" class="reply-form-btn reply-submit">
-                                            <i class="fas fa-paper-plane"></i> 发表回复
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <div class="empty-state">
-                        <i class="far fa-comment-dots"></i>
-                        <p>还没有评论，快来发表第一条评论吧！</p>
-                    </div>
-                </c:otherwise>
-            </c:choose>
-        </ul>
-
         <div class="section-header">
             <i class="far fa-comments"></i>
             <span>评论 (${post.commentCount})</span>
@@ -838,9 +1041,120 @@
             </button>
         </form>
 
+        <!-- 评论列表 -->
+        <ul class="comments-list">
+            <c:choose>
+                <c:when test="${not empty comments}">
+                    <c:forEach items="${comments}" var="comment">
+            <li class="comment-item" data-comment-id="${comment.commentId}">
+                <div class="comment-header">
+                    <div class="comment-author">
+                        <div class="avatar">${comment.userName.substring(0,1)}</div>
+                        <div class="author-info">
+                            <div class="author-name">${comment.userName}对${post.title}说:</div>
+                            <div class="comment-date"><fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd HH:mm" /></div>
+                        </div>
+                    </div>
+                    <div class="comment-actions">
+                        <c:if test="${sessionScope.user.userId == comment.userId}">
+                        <button class="comment-action delete" title="删除评论">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        </c:if>
+                        <button class="comment-action" title="回复">
+                            <i class="fas fa-reply"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="comment-content">${comment.content}</div>
 
+                <!-- 回复列表 -->
+                <div class="show-replies" data-comment-id="${comment.commentId}">
+                    <i class="fas fa-chevron-down"></i>
+                    <span>查看回复 (${fn:length(replyMap[comment.commentId])})</span>
+                </div>
+                <ul class="replies-list" id="replies-${comment.commentId}">
+                    <c:choose>
+                        <c:when test="${not empty replyMap[comment.commentId]}">
+                            <c:forEach items="${replyMap[comment.commentId]}" var="reply">
+                    <li class="reply-item" data-reply-id="${reply.replyId}">
+                        <div class="reply-header">
+                            <div class="reply-author">
+                                <div class="reply-avatar">${reply.userName.substring(0,1)}</div>
+
+                                <div>
+                                    <div class="reply-author-name">${reply.userName}对${userMap.get(reply.parentReplyId).username}说:</div>
+                                    <div class="reply-date"><fmt:formatDate value="${reply.createdAt}" pattern="yyyy-MM-dd HH:mm" /></div>
+                                </div>
+                            </div>
+                            <div class="comment-actions">
+                                <c:if test="${sessionScope.user.userId == reply.getUserId()}">
+                                <button class="comment-action delete" title="删除回复">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                </c:if>
+                                <button class="comment-action" title="回复">
+                                    <i class="fas fa-reply"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="reply-content">${reply.content}</div>
+                        <!-- 回复回复的表单 -->
+                        <div class="reply-to-reply-form" id="reply-to-reply-form-${reply.replyId}">
+                            <form action="${pageContext.request.contextPath}/reply/add" method="post">
+                                <input type="hidden" name="commentId" value="${comment.commentId}">
+                                <input type="hidden" name="postId" value="${post.postId}">
+                                <!-- 当前回复的userId -->
+                                <input type="hidden" name="parentReplyId" value="${reply.userId}">
+                                <textarea name="content" placeholder="回复${reply.userName}..." required></textarea>
+                                <div class="reply-form-actions">
+                                    <button type="button" class="reply-form-btn reply-cancel" data-reply-id="${reply.replyId}">取消</button>
+                                    <button type="submit" class="reply-form-btn reply-submit">
+                                        <i class="fas fa-paper-plane"></i> 发表回复
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="reply-item">暂无回复</li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
+                <!-- 对评论进行回复表单 -->
+                <div class="reply-form" id="reply-form-${comment.commentId}">
+                    <form action="${pageContext.request.contextPath}/reply/add" method="post">
+                        <input type="hidden" name="commentId" value="${comment.commentId}">
+                        <input type="hidden" name="postId" value="${post.postId}">
+                        <input type="hidden" name="parentReplyId" value="${comment.userId}">
+                        <textarea name="content" placeholder="回复${comment.userName}..." required></textarea>
+                        <div class="reply-form-actions">
+                            <button type="button" class="reply-form-btn reply-cancel" data-comment-id="${comment.commentId}">取消</button>
+                            <button type="submit" class="reply-form-btn reply-submit">
+                                <i class="fas fa-paper-plane"></i> 发表回复
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </li>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <div class="empty-state">
+                        <i class="far fa-comment-dots"></i>
+                        <p>还没有评论，快来发表第一条评论吧！</p>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </ul>
+    </div>
 </div>
-</div>
+<!-- 页脚 -->
+<footer class="footer">
+    <p>Copyright © 2025 Powered by BBS论坛</p>
+</footer>
 <script>
     // 点赞功能
     document.querySelectorAll('.action-btn').forEach(button => {
@@ -870,114 +1184,117 @@
     // 删除按钮点击事件
     document.querySelectorAll('.comment-action.delete').forEach(button => {
         button.addEventListener('click', function() {
-            const commentItem = this.closest('.comment-item');
-            if (confirm('确定要删除这条评论吗？')) {
+            const commentItem = this.closest('.comment-item, .reply-item');
+            if (confirm('确定要删除这条内容吗？')) {
                 commentItem.style.opacity = '0';
                 setTimeout(() => {
                     commentItem.remove();
-                    // 这里可以添加AJAX请求到服务器删除评论
                 }, 300);
             }
         });
     });
 
+    // 回复按钮点击事件 - 处理一级回复和二级回复
+    document.querySelectorAll('.comment-action').forEach(button => {
+        if (button.querySelector('i').classList.contains('fa-reply')) {
+            button.addEventListener('click', function(event) {
+                event.stopPropagation(); // 阻止事件冒泡
 
-    // 回复按钮点击事件
-    document.querySelectorAll('.reply-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const commentId = this.getAttribute('data-comment-id');
-            const replyForm = document.getElementById("replies-"+commentId);
-
-            // 隐藏所有其他回复表单
-            document.querySelectorAll('.reply-form').forEach(form => {
-                if (form !== replyForm) {
+                // 隐藏所有回复表单
+                document.querySelectorAll('.reply-form, .reply-to-reply-form').forEach(form => {
                     form.classList.remove('show');
+                });
+
+                // 判断点击的是评论回复按钮还是回复的回复按钮
+                const replyItem = this.closest('.reply-item');
+                const commentItem = this.closest('.comment-item');
+
+                if (replyItem) {
+                    // 二级回复 - 回复的回复
+                    const replyId = replyItem.getAttribute('data-reply-id');
+                    const form = document.getElementById("reply-to-reply-form-"+replyId);
+                    if (form) {
+                        form.classList.add('show');
+                        const textarea = form.querySelector('textarea');
+                        setTimeout(() => textarea.focus(), 100);
+                    }
+                } else if (commentItem) {
+                    // 一级回复 - 评论的回复
+                    const commentId = commentItem.getAttribute('data-comment-id');
+                    const form = document.getElementById("reply-form-"+commentId);
+                    if (form) {
+                        form.classList.add('show');
+                        const textarea = form.querySelector('textarea');
+                        setTimeout(() => textarea.focus(), 100);
+                    }
                 }
             });
-
-            // 切换当前回复表单
-            replyForm.classList.toggle('show');
-
-            // 如果表单显示，聚焦到文本区域
-            if (replyForm.classList.contains('show')) {
-                const textarea = replyForm.querySelector('textarea');
-                setTimeout(() => {
-                    textarea.focus();
-                }, 100);
-            }
-        });
+        }
     });
 
     // 取消回复按钮功能
     document.querySelectorAll('.reply-cancel').forEach(button => {
         button.addEventListener('click', function() {
-            const commentId = this.getAttribute('data-comment-id');
-            const replyForm = document.getElementById("replies-"+commentId);
-            replyForm.classList.remove('show');
+            const form = this.closest('.reply-form, .reply-to-reply-form');
+            if (form) {
+                form.classList.remove('show');
+                const textarea = form.querySelector('textarea');
+                if (textarea) {
+                    // 清空文本
+                    textarea.value = '';
+                }
+            }
         });
     });
 
-    // 展开/收起回复功能  注意js解析不了jsp元素,需要特殊处理
+    // 展开/收起回复功能
     document.querySelectorAll('.show-replies').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.stopPropagation(); // 阻止事件冒泡
+        button.addEventListener('click', function() {
             const commentId = this.getAttribute('data-comment-id');
-                let repliesList = document.getElementById("replies-"+commentId);
+            const repliesList = document.getElementById("replies-"+commentId);
             const icon = this.querySelector('i');
-            console.log("评论id:"+commentId);
-            console.log("回复列表id"+repliesList);
-            if (!commentId) {
-                console.error("data-comment-id 不存在");
-                return;
-            }
-            if (!repliesList) {
-                console.error("找不到 replies-"+commentId+"元素");
-                return;
-            }
-            // 切换显示状态
-            repliesList.classList.toggle('show');
 
-            // 更新箭头方向
-            if (repliesList.classList.contains('show')) {
-                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-            } else {
-                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            if (repliesList) {
+                repliesList.classList.toggle('show');
+
+                // 更新箭头方向
+                if (repliesList.classList.contains('show')) {
+                    icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                } else {
+                    icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                }
             }
         });
     });
+    // 用户菜单切换
+    document.getElementById('user-profile').addEventListener('click', function(e) {
+        e.stopPropagation();
+        const menu = document.getElementById('profile-menu');
+        menu.classList.toggle('show');
+    });
 
-    // 删除按钮功能（评论和回复）
-    document.querySelectorAll('.comment-action.delete').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.stopPropagation(); // 阻止事件冒泡
-            const item = this.closest('.comment-item, .reply-item');
-            const itemId = item.getAttribute('data-comment-id') || item.getAttribute('data-reply-id');
+    // 点击页面其他区域关闭菜单
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('profile-menu');
+        if (menu.classList.contains('show')) {
+            menu.classList.remove('show');
+        }
+    });
 
-            if (confirm('确定要删除这条内容吗？')) {
-                // 发送 AJAX 请求删除内容
-                fetch(`/delete/${itemId}`, {
-                    method: 'DELETE'
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            item.style.opacity = '0';
-                            setTimeout(() => {
-                                item.remove();
-                            }, 300);
-                        } else {
-                            alert('删除失败，请稍后重试');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('删除失败，请稍后重试');
-                    });
-            }
-        });
+    // 阻止菜单内部点击事件冒泡
+    document.getElementById('profile-menu').addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+    // 页面加载时初始化一些状态
+    document.addEventListener('DOMContentLoaded', function() {
+        // 模拟用户登录状态
+        console.log("页面加载完成，回复功能已启用");
+        console.log("一级回复功能：点击评论的回复按钮显示表单");
+        console.log("二级回复功能：点击回复的回复按钮显示表单");
+        console.log("取消按钮功能：点击取消隐藏表单并清空内容");
     });
 </script>
 
 </body>
-
 </html>

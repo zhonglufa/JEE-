@@ -21,4 +21,8 @@ public interface UserDao {
     //根据id获取用户
     @Select("SELECT * FROM user WHERE userId = #{userId}")
     User selectUserById(@Param("userId") Integer userId);
+
+    //根据回复父级id获取用户信息
+    @Select("SELECT * FROM user WHERE userId =#{parentReplyId}")
+    User selectUserByParentReplyId( Integer parentReplyId);
 }

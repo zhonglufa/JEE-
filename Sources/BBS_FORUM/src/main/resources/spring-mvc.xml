@@ -30,5 +30,15 @@
             <mvc:mapping path="/comment/add"/>
             <bean class="com.guihang2.bbs_forum.common.interceptor.MyInterceptor"/>
         </mvc:interceptor>
+        <!-- 新增拦截器配置，确保只有登录用户才能发表文章 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/post/addPost"/>
+            <bean class="com.guihang2.bbs_forum.common.interceptor.MyInterceptor"/>
+        </mvc:interceptor>
+        <!-- 新增拦截器配置，确保只有登录用户才能回复评论 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/reply/add"/>
+            <bean class="com.guihang2.bbs_forum.common.interceptor.MyInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 </beans>

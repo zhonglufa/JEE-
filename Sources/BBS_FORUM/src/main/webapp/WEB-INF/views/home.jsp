@@ -106,14 +106,28 @@
             font-weight: 600;
         }
 
-        .nav-links a.active::after {
+        /*.nav-links a.active::after {*/
+        /*    content: '';*/
+        /*    position: absolute;*/
+        /*    bottom: 0;*/
+        /*    left: 0.5rem;*/
+        /*    width: calc(100% - 1rem);*/
+        /*    height: 2px;*/
+        /*    background: white;*/
+        /*}*/
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 0.5rem;
-            width: calc(100% - 1rem);
+            left: 0;
+            width: 0;
             height: 2px;
             background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .search-bar {
@@ -679,7 +693,7 @@
         </a>
 
         <nav class="nav-links">
-            <a href="#" class="active">首页</a>
+            <a href="${pageContext.request.contextPath}/post/home" class="active">首页</a>
             <a href="#">安卓应用</a>
             <a href="#">专栏</a>
             <a href="#">友情链接</a>
@@ -714,6 +728,10 @@
                             </a>
                             <a href="${pageContext.request.contextPath}/user/profile">
                                 <i class="fas fa-user-circle"></i> 个人资料
+                            </a>
+                            <a href="${pageContext.request.contextPath}/reply/home">
+                                <i class="fas-solid fa-envelope"></i> 我的留言
+                            </a>
                             </a>
                             <a href="${pageContext.request.contextPath}/user/settings">
                                 <i class="fas fa-cog"></i> 设置
@@ -907,7 +925,7 @@
 
 <!-- 页脚 -->
 <footer class="footer">
-    <p>Copyright © 2024 落花爱看繁星 Powered by BBS论坛</p>
+    <p>Copyright © 2025 Powered by BBS论坛</p>
 </footer>
 
 <script>

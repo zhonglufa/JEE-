@@ -38,4 +38,10 @@ public class UserServiceImp implements UserService {
         User user = userDao.selectUserById(userId);
         return user;
     }
+
+    @Override
+    public User getUserByParentReplyId(Integer parentReplyId) {
+
+        return userDao.selectUserByParentReplyId(parentReplyId);
+    }
 }

@@ -7,4 +7,6 @@ public interface UserService {
     User loginUser(User user1);
 
     User getUserById(Integer userId);
+
+    User getUserByParentReplyId(Integer parentReplyId);
 }

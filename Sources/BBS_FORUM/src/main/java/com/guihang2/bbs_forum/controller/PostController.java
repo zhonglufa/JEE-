@@ -7,6 +7,7 @@ import com.guihang2.bbs_forum.pojo.User;
 import com.guihang2.bbs_forum.service.CommentService;
 import com.guihang2.bbs_forum.service.PostService;
 import com.guihang2.bbs_forum.service.ReplyService;
+import com.guihang2.bbs_forum.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,8 @@ public class PostController {
 
     @Autowired
     private ReplyService replyService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/addPost")
     public String addPost(@RequestParam("title") String title,
@@ -133,13 +136,21 @@ public class PostController {
             replyMap.put(commentId, replies == null ? Collections.emptyList() : replies);
         }
         model.addAttribute("replyMap", replyMap);
+        Map<Integer,User> userMap = new HashMap<>();
       // 打印
         for (Map.Entry<Integer, List<Reply>> entry : replyMap.entrySet()) {
             for (Reply reply : entry.getValue()) {
-                System.out.println("打印回复列表内容");
-                System.out.println(entry.getKey() + "+++ " + reply.getContent());
+                //获取父级回复
+                Integer parentReplyId = reply.getParentReplyId();
+                //获取用户
+                User user=userService.getUserByParentReplyId(parentReplyId);
+                //添加到map中
+                userMap.put(parentReplyId,user == null ? User.EMPTY : user);
+                //打印
+                System.out.println(userMap.get(parentReplyId).getUsername()+"用户名");
             }
         }
+        model.addAttribute("userMap", userMap);
          return "postDetail";
     }
 

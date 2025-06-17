@@ -53,6 +53,6 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();// 注销用户
-        return "home"; // 注销后跳转到首页
+        return "redirect:/post/home"; // 注销后跳转到首页
     }
 }
