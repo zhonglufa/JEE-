@@ -12,4 +12,6 @@ public interface ReplyService {
     List<Reply> getRepliesByUserId(Integer userId);
 
     Post getPostByPostId(Integer postId);
+
+    Boolean deleteReply(Integer replyId);
 }

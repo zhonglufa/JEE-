@@ -49,6 +49,9 @@ public class PostController {
         post.setTitle(title);
         post.setContent(content);
         post.setUserId(userId);
+        post.setStatus(1);
+
+
 
         // 处理封面图片
         if (!cover.isEmpty()) {
@@ -91,18 +94,38 @@ public class PostController {
     @RequestMapping("/home")
     public String getPostList(Model model,
                               @RequestParam(defaultValue = "1") int page,
-                              @RequestParam(defaultValue = "6") int pageSize) {
+                              @RequestParam(defaultValue = "6") int pageSize,
+                              @RequestParam(required = false) String keyword) {
 
-        List<Post> postList = postService.getPostList(page, pageSize);
-        if (postList == null || postList.isEmpty()) {
-            System.out.println("No posts found in the database.");
+
+
+
+       //有关键词和没有关键词区分
+        if (keyword != null && !keyword.isEmpty()) {
+            // 确保数据正确传递到前端
+            List<Post> postList = postService.getPostList(page, pageSize, keyword,1);
+            if (postList == null || postList.isEmpty()) {
+                System.out.println("No posts found in the database.");
+            }
+            model.addAttribute("postList", postList); // 文章列表
+            model.addAttribute("currentPage", page); // 当前页码
+            model.addAttribute("pageSize", pageSize); // 每页显示的文章数量
+            model.addAttribute("totalPages", postService.getTotalPages(pageSize, keyword,1)); // 总页数
+            model.addAttribute("keyword", keyword); // 搜索关键字
+
+        }
+        else {
+            List<Post> postList = postService.getPostList(page, pageSize,1);
+            if (postList == null || postList.isEmpty()) {
+                System.out.println("No posts found in the database.");
+            }
+            // 确保数据正确传递到前端
+            model.addAttribute("postList", postList); // 文章列表
+            model.addAttribute("currentPage", page); // 当前页码
+            model.addAttribute("pageSize", pageSize); // 每页显示的文章数量
+            model.addAttribute("totalPages", postService.getTotalPages(pageSize,1)); // 总页数
         }
 
-        // 确保数据正确传递到前端
-        model.addAttribute("postList", postList); // 文章列表
-        model.addAttribute("currentPage", page); // 当前页码
-        model.addAttribute("pageSize", pageSize); // 每页显示的文章数量
-        model.addAttribute("totalPages", postService.getTotalPages(pageSize)); // 总页数
 
         // 返回视图名称，确保视图解析器能够正确解析
         return "home";
@@ -118,7 +141,7 @@ public class PostController {
     @GetMapping("/detail/{postId}")
     public String getPostDetail(@PathVariable Integer postId, Model model) {
         // 获取文章详情
-        Post post = postService.getPostById(postId);
+        Post post = postService.getPostById(postId,1);
         // 将封面图片转换为Base64编码，以便在前端显示
         if (post.getCoverImage() != null) {
             model.addAttribute("post", post);

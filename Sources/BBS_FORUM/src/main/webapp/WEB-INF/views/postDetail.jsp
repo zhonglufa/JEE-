@@ -912,9 +912,9 @@
 
         <nav class="nav-links">
             <a href="${pageContext.request.contextPath}/post/home" class="active">首页</a>
-            <a href="#">安卓应用</a>
-            <a href="#">专栏</a>
-            <a href="#">友情链接</a>
+            <a href="#">待拓展</a>
+            <a href="#">待拓展</a>
+            <a href="#">待拓展</a>
         </nav>
      <c:if test="${false}">
          <div class="search-bar">
@@ -967,7 +967,7 @@
     </div>
 </header>
 <div class="container">
-    <div class="post-detail">
+    <div class="post-detail" data-post-id="${post.postId}">
         <!-- 文章头部 -->
         <div class="post-header">
             <h1 class="post-title">${post.title}</h1>
@@ -1032,7 +1032,7 @@
 
         <!-- 评论表单 -->
         <form class="comment-form" action="${pageContext.request.contextPath}/comment/add" method="post">
-            <input type="hidden" name="postId" value="${post.postId}">
+            <input type="hidden"  name="postId" value="${post.postId}">
             <div class="form-group">
                 <textarea class="form-control" name="content" required placeholder="分享你的想法..."></textarea>
             </div>
@@ -1058,6 +1058,7 @@
                     <div class="comment-actions">
                         <c:if test="${sessionScope.user.userId == comment.userId}">
                         <button class="comment-action delete" title="删除评论">
+                            <input type="hidden"  id="isUserComment-${comment.commentId}" value="${sessionScope.user.userId ==  comment.userId}"/>
                             <i class="fas fa-trash-alt"></i>
                         </button>
                         </c:if>
@@ -1090,6 +1091,7 @@
                             <div class="comment-actions">
                                 <c:if test="${sessionScope.user.userId == reply.getUserId()}">
                                 <button class="comment-action delete" title="删除回复">
+                                    <input type="hidden"  id="isUserComment-${reply.replyId}" value="${sessionScope.user.userId == reply.getUserId()}">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                                 </c:if>
@@ -1103,7 +1105,7 @@
                         <div class="reply-to-reply-form" id="reply-to-reply-form-${reply.replyId}">
                             <form action="${pageContext.request.contextPath}/reply/add" method="post">
                                 <input type="hidden" name="commentId" value="${comment.commentId}">
-                                <input type="hidden" name="postId" value="${post.postId}">
+                                <input type="hidden"  name="postId" value="${post.postId}">
                                 <!-- 当前回复的userId -->
                                 <input type="hidden" name="parentReplyId" value="${reply.userId}">
                                 <textarea name="content" placeholder="回复${reply.userName}..." required></textarea>
@@ -1184,15 +1186,63 @@
     // 删除按钮点击事件
     document.querySelectorAll('.comment-action.delete').forEach(button => {
         button.addEventListener('click', function() {
-            const commentItem = this.closest('.comment-item, .reply-item');
-            if (confirm('确定要删除这条内容吗？')) {
-                commentItem.style.opacity = '0';
-                setTimeout(() => {
-                    commentItem.remove();
-                }, 300);
+
+            const commentItem = this.closest('.comment-item, .reply-item'); // 获取当前评论或回复项
+            // 获取评论或回复的ID
+            const itemId = commentItem.getAttribute('data-comment-id') || commentItem.getAttribute('data-reply-id');
+            const itemType = commentItem.classList.contains('comment-item') ? 'comment' : 'reply';
+           // 判断当前用户是否是该评论或回复的作者
+            const isUserComment = document.getElementById("isUserComment-"+itemId).value === "true";
+
+            // const postIdInput = document.querySelector("input[name='postId']");
+            // const postId = postIdInput ? postIdInput.value : null;  // 获取帖子ID
+            // console.log("帖子id"+postId);
+
+            //获取 Web 应用的上下文路径
+            const contextPath = "${pageContext.request.contextPath}";
+            console.log("上下文"+contextPath);
+
+            if (isUserComment) {
+                if (confirm('确定要删除这条内容吗？')) {
+
+                    // 发送删除请求
+                    fetch(contextPath+"/"+itemType+"/delete/"+itemId, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({})
+                    })
+                        .then(response => {
+                        if (!response.ok) {
+                            // 即使不是 ok，也尝试读取错误信息
+                            return response.text().then(text => {
+                                throw new Error(`服务器返回错误: ${text}`);
+                            });
+                        }
+                        return response.text(); // 因为你返回的是 text/plain 类型
+                    })
+                        .then(message => {
+                            console.log("删除成功:", message);
+                            commentItem.style.opacity = '0';
+                            setTimeout(() => {
+                                commentItem.remove();
+                            }, 300);
+                        })
+                        .catch(error => {
+                            console.error('删除失败:', error);
+                            alert('删除失败，请稍后重试:'+error.message);
+                        });
+                }
+            } else {
+                alert('您只能删除自己的评论或回复！');
             }
         });
     });
+
+
+
+
 
     // 回复按钮点击事件 - 处理一级回复和二级回复
     document.querySelectorAll('.comment-action').forEach(button => {
@@ -1286,14 +1336,7 @@
         e.stopPropagation();
     });
 
-    // 页面加载时初始化一些状态
-    document.addEventListener('DOMContentLoaded', function() {
-        // 模拟用户登录状态
-        console.log("页面加载完成，回复功能已启用");
-        console.log("一级回复功能：点击评论的回复按钮显示表单");
-        console.log("二级回复功能：点击回复的回复按钮显示表单");
-        console.log("取消按钮功能：点击取消隐藏表单并清空内容");
-    });
+
 </script>
 
 </body>

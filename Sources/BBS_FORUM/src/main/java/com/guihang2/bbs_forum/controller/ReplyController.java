@@ -7,6 +7,8 @@ import com.guihang2.bbs_forum.service.ReplyService;
 import com.guihang2.bbs_forum.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -75,6 +77,29 @@ public class ReplyController {
         model.addAttribute("messages", replies);
         model.addAttribute("postMap", postMap);
         return "myNewsPage";
+    }
+
+
+    @DeleteMapping("/delete/{replyId}")
+    public ResponseEntity<String> deleteReply(@PathVariable Integer replyId) {
+
+
+
+        // 调用服务层删除回复
+        Boolean result =  replyService.deleteReply(replyId);
+
+
+        if (!result) {
+            return ResponseEntity.badRequest().body("删除评论失败，请稍后重试");
+        }
+
+        replyService.deleteReply(replyId);
+
+        return ResponseEntity.ok("删除成功"); // 返回 200 OK
+
+
+
+
     }
 
 

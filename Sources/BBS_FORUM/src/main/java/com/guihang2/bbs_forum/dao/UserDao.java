@@ -1,9 +1,12 @@
 package com.guihang2.bbs_forum.dao;
 
+import com.guihang2.bbs_forum.pojo.Post;
 import com.guihang2.bbs_forum.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface UserDao {
@@ -25,4 +28,13 @@ public interface UserDao {
     //根据回复父级id获取用户信息
     @Select("SELECT * FROM user WHERE userId =#{parentReplyId}")
     User selectUserByParentReplyId( Integer parentReplyId);
+
+
+    //根据用户id获取用户发帖
+    @Select("SELECT * FROM post WHERE userId = #{userId}")
+    List<Post> selectUserPostById(Integer userId);
+
+
+
+
 }

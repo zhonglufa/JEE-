@@ -1,10 +1,13 @@
 package com.guihang2.bbs_forum.service.Impl;
 
 import com.guihang2.bbs_forum.dao.UserDao;
+import com.guihang2.bbs_forum.pojo.Post;
 import com.guihang2.bbs_forum.pojo.User;
 import com.guihang2.bbs_forum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -43,5 +46,11 @@ public class UserServiceImp implements UserService {
     public User getUserByParentReplyId(Integer parentReplyId) {
 
         return userDao.selectUserByParentReplyId(parentReplyId);
+    }
+
+    @Override
+    public List<Post> getUserPostById(Integer userId) {
+
+        return userDao.selectUserPostById(userId);
     }
 }

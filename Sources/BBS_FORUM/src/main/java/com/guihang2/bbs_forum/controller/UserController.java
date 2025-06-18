@@ -1,12 +1,16 @@
 package com.guihang2.bbs_forum.controller;
 
+import com.guihang2.bbs_forum.pojo.Post;
 import com.guihang2.bbs_forum.pojo.User;
 import com.guihang2.bbs_forum.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -54,5 +58,16 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();// 注销用户
         return "redirect:/post/home"; // 注销后跳转到首页
+    }
+
+
+    @RequestMapping("/post/{userId}")
+    public  String getUserPostById(@PathVariable Integer userId, Model model) {
+        List<Post> post  = userService.getUserPostById(userId);
+        model.addAttribute("post",post);
+
+
+        return "postPage";
+
     }
 }

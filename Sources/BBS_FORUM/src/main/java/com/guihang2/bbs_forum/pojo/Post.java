@@ -15,6 +15,8 @@ public class Post {
     private Integer likes; // 点赞数
     private Integer commentCount; // 评论数量
 
+    private Integer status; // 状态，0表示正常，1表示已删除
+
     // Getters and Setters
     public Integer getPostId() {
         return postId;
@@ -96,6 +98,14 @@ public class Post {
         this.commentCount = commentCount;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -109,6 +119,7 @@ public class Post {
                 ", views=" + views +
                 ", likes=" + likes +
                 ", commentCount=" + commentCount +
+                ", status=" +status +
                 '}';
     }
 }

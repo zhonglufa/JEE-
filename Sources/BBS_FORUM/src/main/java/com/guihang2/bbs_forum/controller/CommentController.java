@@ -6,6 +6,7 @@ import com.guihang2.bbs_forum.service.CommentService;
 import com.guihang2.bbs_forum.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,14 +54,25 @@ public class CommentController {
 
     // 删除评论
     @DeleteMapping("/delete/{commentId}")
-    public String deleteComment(@PathVariable Integer commentId) {
+    public ResponseEntity<String> deleteComment(@PathVariable Integer commentId) {
         // 调用服务层删除评论
         boolean result = commentService.deleteComment(commentId);
+
         if (!result) {
-            return "redirect:/post/list?error=删除评论失败，请稍后重试";
+            return ResponseEntity.badRequest().body("删除评论失败，请稍后重试");
         }
 
-        return "redirect:/post/list";
+        return ResponseEntity.ok("删除成功");
+/*        返回响应数据写法
+ResponseEntity<Map<String, Object>>
+        Map<String, Object> response = new HashMap<>();
+        if (success) {
+            response.put("success", true);
+        } else {
+            response.put("success", false);
+            response.put("message", "删除失败");
+        }
+        return ResponseEntity.ok(response);*/
     }
 
     // 获取评论列表（供API使用）
@@ -69,4 +81,6 @@ public class CommentController {
     public List<Comment> getCommentsByPostId(@PathVariable Integer postId) {
         return commentService.getCommentsByPostId(postId);
     }
+
+
 }

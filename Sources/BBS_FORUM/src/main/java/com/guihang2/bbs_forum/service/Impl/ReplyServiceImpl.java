@@ -41,4 +41,13 @@ public class ReplyServiceImpl implements ReplyService {
     public Post getPostByPostId(Integer postId) {
         return replyDao.getPostByPostId(postId);
     }
+
+    @Override
+    public Boolean deleteReply(Integer replyId) {
+
+        /*如果 result == null，Boolean.TRUE.equals(result) 返回 false
+        如果 result == true，返回 true
+        如果 result == false，返回 false*/
+        return replyDao.deleteReply(replyId);
+    }
 }

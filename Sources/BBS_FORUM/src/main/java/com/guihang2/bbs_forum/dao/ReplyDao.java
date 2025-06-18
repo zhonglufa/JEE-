@@ -2,7 +2,9 @@ package com.guihang2.bbs_forum.dao;
 
 import com.guihang2.bbs_forum.pojo.Post;
 import com.guihang2.bbs_forum.pojo.Reply;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -25,5 +27,10 @@ public interface ReplyDao {
      //根据回复表中postId查询文章内容
     @Select("SELECT * FROM post WHERE postId = #{postId}")
     Post getPostByPostId(Integer postId);
+
+
+    //删除回复
+    @Delete("DELETE FROM reply WHERE replyId = #{replyId}")
+    Boolean deleteReply(@Param("replyId") Integer replyId);
 
 }

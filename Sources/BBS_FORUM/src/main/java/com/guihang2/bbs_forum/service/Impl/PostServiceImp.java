@@ -27,24 +27,36 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public Post getPostById(Integer postId) {
-        return postDao.selectPostWithUserNameByPostId(postId);
+    public Post getPostById(Integer postId,Integer status) {
+        return postDao.selectPostWithUserNameByPostId(postId,status);
 
     }
 
 
     @Override
-    public List<Post> getPostList(int page, int pageSize) {
+    public List<Post> getPostList(int page, int pageSize,Integer status) {
         int offset = (page - 1) * pageSize;
-        return postDao.selectPostList(offset, pageSize);
+        return postDao.selectPostList(offset, pageSize, status);
     }
 
     @Override
-    public int getTotalPages(int pageSize) {
-        int totalPosts = postDao.countPosts();
+    public List<Post> getPostList(int page, int pageSize, String keyword,Integer status) {
+        int offset = (page - 1) * pageSize;
+        return postDao.selectPostListByKeyword(offset, pageSize, keyword, status);
+    }
+
+    @Override
+    public int getTotalPages(int pageSize,Integer status) {
+        int totalPosts = postDao.countAllPosts( status);
         // 计算总页数 math.ceil向上取整数
         return (int) Math.ceil((double) totalPosts / pageSize);
         //    return (totalPosts + pageSize - 1) / pageSize;
 
+    }
+
+    @Override
+    public int getTotalPages(int pageSize, String keyword,Integer status) {
+        int totalPosts = postDao.countPostsByKeyword(keyword,status);
+        return (int) Math.ceil((double) totalPosts / pageSize);
     }
 }

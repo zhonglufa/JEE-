@@ -694,15 +694,19 @@
 
         <nav class="nav-links">
             <a href="${pageContext.request.contextPath}/post/home" class="active">首页</a>
-            <a href="#">安卓应用</a>
-            <a href="#">专栏</a>
-            <a href="#">友情链接</a>
+            <a href="#">待拓展</a>
+            <a href="#">待拓展</a>
+            <a href="#">待拓展</a>
         </nav>
 
+
+        <form action="${pageContext.request.contextPath}/post/home" method="get">
         <div class="search-bar">
-            <input type="text" placeholder="搜索内容..." />
-            <button><i class="fas fa-search"></i></button>
+                <input type="text" name="keyword" placeholder="搜索内容..." value="${param.keyword}" />
+                <button type="submit"><i class="fas fa-search"></i></button>
         </div>
+        </form>
+
 
         <div class="user-controls">
             <c:choose>
@@ -723,7 +727,7 @@
                         <span class="user-name" id="user-name">${sessionScope.user.username}</span>
 
                         <div class="profile-menu" id="profile-menu">
-                            <a href="${pageContext.request.contextPath}/user/post">
+                            <a href="${pageContext.request.contextPath}/user/post/${user.userId}">
                                 <i class="fas fa-folder"></i> 我的文章
                             </a>
                             <a href="${pageContext.request.contextPath}/user/profile">
@@ -731,7 +735,6 @@
                             </a>
                             <a href="${pageContext.request.contextPath}/reply/home">
                                 <i class="fas-solid fa-envelope"></i> 我的留言
-                            </a>
                             </a>
                             <a href="${pageContext.request.contextPath}/user/settings">
                                 <i class="fas fa-cog"></i> 设置
@@ -814,7 +817,7 @@
         <!-- 分页控件 -->
         <div class="pagination">
             <c:if test="${currentPage > 1}">
-                <a href="${pageContext.request.contextPath}/post/home?page=${currentPage - 1}&pageSize=${pageSize}">
+                <a href="${pageContext.request.contextPath}/post/home?page=${currentPage - 1}&pageSize=${pageSize}&keyword=${param.keyword}">
                     <i class="fas fa-chevron-left"></i>
                 </a>
             </c:if>
@@ -825,13 +828,13 @@
                         <span>${i}</span>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/post/home?page=${i}&pageSize=${pageSize}">${i}</a>
+                        <a href="${pageContext.request.contextPath}/post/home?page=${i}&pageSize=${pageSize}&keyword=${param.keyword}">${i}</a>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
 
             <c:if test="${currentPage < totalPages}">
-                <a href="${pageContext.request.contextPath}/post/home?page=${currentPage + 1}&pageSize=${pageSize}">
+                <a href="${pageContext.request.contextPath}/post/home?page=${currentPage + 1}&pageSize=${pageSize}&keyword=${param.keyword}">
                     <i class="fas fa-chevron-right"></i>
                 </a>
             </c:if>

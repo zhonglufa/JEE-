@@ -621,9 +621,9 @@
 
     <nav class="nav-links">
       <a href="${pageContext.request.contextPath}/post/home">首页</a>
-      <a href="#">安卓应用</a>
-      <a href="#">专栏</a>
-      <a href="#">友情链接</a>
+      <a href="#">待拓展</a>
+      <a href="#">待拓展</a>
+      <a href="#">待拓展</a>
     </nav>
 
     <div class="user-controls">

@@ -139,5 +139,21 @@
             preview.style.display = 'none';
         }
     });
+
+    // 文件上传前验证
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const fileInput = document.getElementById('cover');
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            if (file.size > 50000) { // 50KB
+                alert('图片大小不能超过50KB');
+                e.preventDefault();
+            }
+            if (!file.type.startsWith('image/')) {
+                alert('只能上传图片文件');
+                e.preventDefault();
+            }
+        }
+    });
 </script>
 </html>
