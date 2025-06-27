@@ -145,7 +145,7 @@
         const fileInput = document.getElementById('cover');
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
-            if (file.size > 50000) { // 50KB
+            if (file.size > 500000) { // 500KB
                 alert('图片大小不能超过50KB');
                 e.preventDefault();
             }

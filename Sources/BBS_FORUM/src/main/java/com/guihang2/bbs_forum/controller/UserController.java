@@ -36,7 +36,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "redirect:/"; // 返回 login.jsp
+        return "redirect:/";
     }
 
     @PostMapping("/login")

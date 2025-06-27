@@ -1051,7 +1051,7 @@
                     <div class="comment-author">
                         <div class="avatar">${comment.userName.substring(0,1)}</div>
                         <div class="author-info">
-                            <div class="author-name">${comment.userName}对${post.title}说:</div>
+                            <div class="author-name">${comment.userName}对${post.title.substring(0,3)}...说:</div>
                             <div class="comment-date"><fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd HH:mm" /></div>
                         </div>
                     </div>

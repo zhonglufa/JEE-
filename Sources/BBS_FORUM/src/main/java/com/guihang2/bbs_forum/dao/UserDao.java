@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface UserDao {
     //注册用户
-    @Select("insert into user (username, password, email, role, created_at) values (#{username}, #{password}, #{email}, #{role}, #{createdAt})")
+    @Select("insert into user (username, password, email, role, createdAt) values (#{username}, #{password}, #{email}, #{role}, #{createdAt})")
     void insertUser(User user);
     
     //登录验证

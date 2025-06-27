@@ -63,7 +63,7 @@ public class CommentController {
         }
 
         return ResponseEntity.ok("删除成功");
-/*        返回响应数据写法
+/*        返回响应数据前后端分离写法
 ResponseEntity<Map<String, Object>>
         Map<String, Object> response = new HashMap<>();
         if (success) {

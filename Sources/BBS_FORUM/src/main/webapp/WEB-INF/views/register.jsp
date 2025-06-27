@@ -176,6 +176,14 @@
   </script>
 </c:if>
 <script>
+  // 获取当前页面的URL参数向alert返回值
+  function getUrlParams(url = window.location.href) {
+    const search = new URL(url).search;
+    const params = new URLSearchParams(search);
+    return alert(params.get('msg'));
+  }
+
+
 
 
   function showStep2() {

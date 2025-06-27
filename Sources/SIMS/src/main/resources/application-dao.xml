@@ -7,7 +7,7 @@
         http://www.springframework.org/schema/context
         https://www.springframework.org/schema/context/spring-context.xsd">
       <!--配置SpringMVC要扫描的包 注解使用-->
-    <context:component-scan base-package="com.guihang2.bbs_forum.dao"/>
+    <context:component-scan base-package="com.example.sims.dao"/>
        <!--引入数据库属性文件-->
     <context:property-placeholder location="classpath:jdbc.properties" />
     <!--数据源-->
@@ -27,7 +27,7 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <!--指定要扫描的dao的包-->
-        <property name="basePackage" value="com.guihang2.bbs_forum.dao"/>
+        <property name="basePackage" value="com.example.sims.dao"/>
     </bean>
 <!--    分页插件配置-->
     <bean class="com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor">
